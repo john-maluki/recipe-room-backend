@@ -45,6 +45,15 @@ class Recipe(BaseModel):
         "User", secondary="favourites", back_populates="favourite_recepes"
     )
 
+    @property
+    def rating(self):
+        length = len(self.ratings)
+        if length == 0:
+            return 0
+        total = sum([r.rating for r in self.ratings])
+
+        return total / length
+
 
 class Comment(BaseModel):
     __tablename__ = "comments"
@@ -71,7 +80,7 @@ class Rating(BaseModel):
     __tablename__ = "ratings"
 
     id = Column(Integer, primary_key=True)
-    comment = Column(String, nullable=False)
+    rating = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
     recipe_id = Column(Integer, ForeignKey("recipes.id"))
     created_at = Column(DateTime, server_default=func.now())
