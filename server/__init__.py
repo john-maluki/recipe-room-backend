@@ -8,4 +8,4 @@ from . import routes
 from . import database
 from . import models
 
-BaseModel.metadata.create_all(bind=engine)
+# BaseModel.metadata.create_all(bind=engine)
