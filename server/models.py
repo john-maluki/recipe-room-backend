@@ -20,49 +20,59 @@ class User(BaseModel):
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
 
+    favourite_recepes = relationship(
+        "Recipe", secondary="favourites", back_populates="user_favourites"
+    )
+
 
 class Recipe(BaseModel):
     __tablename__ = "recipes"
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String, nullable = False)
-    recipe_image = Column(String, nullable = False)
-    ingredients =  Column(String, nullable = False)
-    procedure = Column(String, nullable = False)
-    number_of_people_served = Column(Integer, nullable = False)
-    time_in_minutes = Column(Integer, nullable = False)
-    user_id = Column(Integer, nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    recipe_image = Column(String, nullable=False)
+    ingredients = Column(String, nullable=False)
+    procedure = Column(String, nullable=False)
+    number_of_people_served = Column(Integer, nullable=False)
+    time_in_minutes = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
+
+    comments = relationship("Comment", backref="recipe", cascade="all, delete")
+    ratings = relationship("Rating", backref="rating", cascade="all, delete")
+    user_favourites = relationship(
+        "User", secondary="favourites", back_populates="favourite_recepes"
+    )
+
 
 class Comment(BaseModel):
     __tablename__ = "comments"
 
-    id = Column(Integer, primary_key = True)
-    comment = Column(String, nullable = False)
-    user_id = Column(Integer, nullable = False)
-    recipe_id = Column(Integer, nullable = False)
+    id = Column(Integer, primary_key=True)
+    comment = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    recipe_id = Column(Integer, ForeignKey("recipes.id"))
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
 
 
-class Favourites(BaseModel):
+class Favourite(BaseModel):
     __tablename__ = "favourites"
 
-    id = Column(Integer, primary_key = True)
-    user_id = Column(Integer, nullable = False)
-    recipe_id = Column(Integer, nullable = False)
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    recipe_id = Column(Integer, ForeignKey("recipes.id"))
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
+
 
 class Rating(BaseModel):
     __tablename__ = "ratings"
 
-    id = Column(Integer, primary_key = True)
-    comment = Column(String, nullable = False)
-    user_id = Column(Integer, nullable = False)
-    recipe_id = Column(Integer, nullable = False)
+    id = Column(Integer, primary_key=True)
+    comment = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    recipe_id = Column(Integer, ForeignKey("recipes.id"))
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
-
-
