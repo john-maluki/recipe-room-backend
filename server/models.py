@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped, mapped_column, relationship, backref
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy import ForeignKey, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.sql import func
 
@@ -80,8 +80,16 @@ class Rating(BaseModel):
     __tablename__ = "ratings"
 
     id = Column(Integer, primary_key=True)
-    rating = Column(String, nullable=False)
+    rating = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
     recipe_id = Column(Integer, ForeignKey("recipes.id"))
     created_at = Column(DateTime, server_default=func.now())
     created_at = Column(DateTime, onupdate=func.now())
+
+    @validates("rating")
+    def validate_rating(self, key, rating):
+        if not isinstance(rating, int):
+            raise ValueError("Rating must be a number")
+        if not (1 <= rating <= 5):
+            raise ValueError("Rating must be in range 1-5")
+        return rating
