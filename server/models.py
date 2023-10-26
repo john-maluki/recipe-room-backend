@@ -24,6 +24,8 @@ class User(BaseModel):
         "Recipe", secondary="favourites", back_populates="user_favourites"
     )
 
+    recipes = relationship("Recipe", backref="user", cascade="all, delete")
+
 
 class Recipe(BaseModel):
     __tablename__ = "recipes"
