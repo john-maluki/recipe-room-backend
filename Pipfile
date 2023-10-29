@@ -9,6 +9,7 @@ uvicorn = "*"
 sqlalchemy = "*"
 alembic = "*"
 fastapi-shell = "*"
+passlib = "*"
 
 [dev-packages]
 
