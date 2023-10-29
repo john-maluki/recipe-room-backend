@@ -11,6 +11,9 @@ alembic = "*"
 fastapi-shell = "*"
 passlib = "*"
 python-jose = "*"
+python-multipart = "*"
+pyjwt = "*"
+python-decouple = "*"
 
 [dev-packages]
 

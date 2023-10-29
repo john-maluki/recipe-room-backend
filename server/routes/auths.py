@@ -27,7 +27,10 @@ async def register_user(user: CreateUserSchema, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-async def login(user_credentials: LoginSchema, db: Session = Depends(get_db)):
+async def login(
+    user_credentials: LoginSchema,
+    db: Session = Depends(get_db),
+):
     user = AuthRepository.login(
         user_credentials.username, user_credentials.password, db
     )
@@ -35,4 +38,5 @@ async def login(user_credentials: LoginSchema, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials!"
         )
-    return user
+    access_token = AuthRepository.create_access_token(user)
+    return access_token
