@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 
-from ..schemas import CreateUserSchema
+from ..schemas import CreateUserSchema, LoginSchema
 from ..models import User
 from ..repository.user import AuthRepository
 from ..database import get_db
 from ..hashing import Hash
 
-router = APIRouter(prefix="/auth", tags=["auths"])
+router = APIRouter(prefix="/auth", tags=["authentication"])
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
@@ -24,3 +24,15 @@ async def register_user(user: CreateUserSchema, db: Session = Depends(get_db)):
         password=hashed_password,
     )
     return AuthRepository.register_user(new_user, db)
+
+
+@router.post("/login")
+async def login(user_credentials: LoginSchema, db: Session = Depends(get_db)):
+    user = AuthRepository.login(
+        user_credentials.username, user_credentials.password, db
+    )
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials!"
+        )
+    return user

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from server.database import SessionLocal
 from server.models import User, Recipe, Rating, Favourite, Comment
+from server.hashing import Hash
 
 if __name__ == "__main__":
     session = SessionLocal()
@@ -20,7 +21,7 @@ if __name__ == "__main__":
             profile_photo="https://media.istockphoto.com/id/1477514412/photo/black-woman-facial-profile-and-beauty-in-studio-isolated-white-background-and-mockup-female.webp?b=1&s=170667a&w=0&k=20&c=5VSnoJBGP-Strmklde3JX9lOdbyRdRECfVQ-sXRcllw=",
             country="Kenya",
             phone_number="0700000000",
-            password="john@123",
+            password=Hash.bcrypt("john@123"),
         )
     ]
     for user in users:
