@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, status
 
 from ..schemas import CreateUserSchema
 from ..models import User
+from ..repository.user import AuthRepository
 from ..database import get_db
 from ..hashing import Hash
 
@@ -22,7 +23,4 @@ async def register_user(user: CreateUserSchema, db: Session = Depends(get_db)):
         phone_number=user.phone_number,
         password=hashed_password,
     )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+    return AuthRepository.register_user(new_user, db)
