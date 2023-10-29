@@ -31,3 +31,6 @@ archive.zip
 
 # Db
 recepe_room.db
+
+# virtual env
+.env
