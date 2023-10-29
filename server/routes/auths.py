@@ -6,10 +6,10 @@ from ..models import User
 from ..database import get_db
 from ..hashing import Hash
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auths"])
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED, tags=["auths"])
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(user: CreateUserSchema, db: Session = Depends(get_db)):
     hashed_password = Hash.bcrypt(user.password)
     new_user = User(

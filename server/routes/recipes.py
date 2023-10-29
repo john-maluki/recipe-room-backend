@@ -6,20 +6,19 @@ from ..schemas import RecipeSchema
 from ..models import Recipe
 from ..database import get_db
 
-router = APIRouter()
+router = APIRouter(prefix="/recipes", tags=["recipes"])
 
 
-@router.get("/recipes", response_model=List[RecipeSchema], tags=["recipes"])
+@router.get("/", response_model=List[RecipeSchema])
 async def get_recipes(db: Session = Depends(get_db)):
     recipes = db.query(Recipe).all()
     return recipes
 
 
 @router.get(
-    "/recipes/{id}",
+    "/{id}",
     status_code=status.HTTP_200_OK,
     response_model=RecipeSchema,
-    tags=["recipes"],
 )
 async def get_recipe_by_id(id: int, db: Session = Depends(get_db)):
     recipe = db.query(Recipe).filter_by(id=id).first()
