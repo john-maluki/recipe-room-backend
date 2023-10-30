@@ -48,3 +48,17 @@ class RecipeRepository:
         db.refresh(existing_recipe)
 
         return existing_recipe
+    
+    def delete_recipe(id: int, db: Session):
+        recipe = db.query(Recipe).filter_by(id=id).first()
+
+        if not recipe:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Recipe with id {id} not found!"
+            )
+
+        db.delete(recipe)
+        db.commit()
+
+        return {"message": f"Recipe with id {id} has been deleted"}
