@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from ..database import SessionLocal
 
 from ..models import User
+from ..schemas import UpdateUserSchema
 from ..hashing import Hash
 from ..auth.auth_handler import signJWT
 
@@ -14,6 +15,17 @@ class UserRepository:
     def get_user_by_id(id: int, db: Session):
         user = db.query(User).filter_by(id=id).first()
         return user
+    
+    def update_user(existing_user: User, user_data: UpdateUserSchema, db: Session):
+        data_dict = user_data.dict()
+
+        for key, value in data_dict.items():
+            setattr(existing_user, key, value)
+
+        db.commit()
+        db.refresh(existing_user)
+
+        return existing_user
 
 
 class AuthRepository:

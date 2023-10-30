@@ -92,6 +92,19 @@ class CreateUserSchema(BaseModel):
     phone_number: str
     password: str
 
+class UpdateUserSchema(BaseModel):
+    first_name: Optional[str]
+    last_name: Optional[str]
+    username: Optional[str]
+    email: Optional[str]
+    profile_photo: Optional[str]
+    country: Optional[str]
+    phone_number: Optional[str]
+    password: Optional[str]
+
+    class Config:
+        orm_mode = True
+
 
 class LoginSchema(BaseModel):
     email: str
