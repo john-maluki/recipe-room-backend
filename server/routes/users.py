@@ -47,3 +47,15 @@ async def update_user(id: int, user_data: UpdateUserSchema, db: Session = Depend
 
     updated_user = UserRepository.update_user(existing_user, user_data, db)
     return updated_user
+
+@router.delete(
+    "/{id}",
+    response_model=dict,
+    dependencies=[Depends(JWTBearer())],
+)
+async def delete_user(id: int, db: Session = Depends(get_db)):
+    try:
+        UserRepository.delete_user(id, db)
+        return {"message": f"User with id {id} has been deleted"}
+    except HTTPException as e:
+        return {"error": str(e)}

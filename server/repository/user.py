@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 from ..database import SessionLocal
 
 from ..models import User
@@ -26,6 +27,20 @@ class UserRepository:
         db.refresh(existing_user)
 
         return existing_user
+    
+    def delete_user(user_id: int, db: Session):
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with id {user_id} not found!"
+            )
+
+        db.delete(user)
+        db.commit()
+
+        return {"message": f"User with id {user_id} has been deleted"}
 
 
 class AuthRepository:
