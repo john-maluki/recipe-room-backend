@@ -32,7 +32,7 @@ async def login(
     db: Session = Depends(get_db),
 ):
     user = AuthRepository.login(
-        user_credentials.username, user_credentials.password, db
+        user_credentials.email, user_credentials.password, db
     )
     if not user:
         raise HTTPException(

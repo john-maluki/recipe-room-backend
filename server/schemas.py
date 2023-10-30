@@ -24,7 +24,7 @@ class ShowUserSchema(BaseModel):
     profile_photo: str
     country: str
     phone_number: str
-    favourite_recepes: List[ShowFavouriteRecipe]
+    favourite_recepes: List[ShowFavouriteRecipe] = []
 
     class Config:
         orm_mode = True
@@ -38,8 +38,23 @@ class ShowCommentSchema(BaseModel):
         orm_mode = True
 
 
+class CreateRecipeSchema(BaseModel):
+    name: str
+    recipe_image: str
+    ingredients: str
+    procedure: str
+    number_of_people_served: int
+    time_in_minutes: int
+    country: str
+    user_id: int
+    
+    class Config:
+        orm_mode = True
+
+
 class RecipeSchema(BaseModel):
     id: int
+    name: str
     recipe_image: str
     ingredients: str
     procedure: str
@@ -66,5 +81,5 @@ class CreateUserSchema(BaseModel):
 
 
 class LoginSchema(BaseModel):
-    username: str
+    email: str
     password: str

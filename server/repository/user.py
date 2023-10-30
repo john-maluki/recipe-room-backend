@@ -28,11 +28,11 @@ class AuthRepository:
         db.refresh(new_user)
         return new_user
 
-    def login(username, password, db: Session):
+    def login(email, password, db: Session):
         """
         Fetch user by email and then return it
         """
-        user = db.query(User).filter_by(email=username).first()
+        user = db.query(User).filter_by(email=email).first()
         if user:
             if not Hash.verify_password(password, user.password):
                 return None
