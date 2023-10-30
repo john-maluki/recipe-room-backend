@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -64,6 +64,19 @@ class RecipeSchema(BaseModel):
     rating: float
     user: ShowUserSchema
     comments: List[ShowCommentSchema]
+
+    class Config:
+        orm_mode = True
+
+
+class UpdateRecipeSchema(BaseModel):
+    name: Optional[str]
+    recipe_image: Optional[str]
+    ingredients: Optional[str]
+    procedure: Optional[str]
+    number_of_people_served: Optional[int]
+    time_in_minutes: Optional[int]
+    country: Optional[str]
 
     class Config:
         orm_mode = True
