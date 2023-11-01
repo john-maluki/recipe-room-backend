@@ -48,3 +48,28 @@ async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
     CommentRepository.delete_comment(comment_id, db)
     
     return {"message": "Comment deleted successfully"}
+
+@router.get("/by_recipe/{recipe_id}", response_model=list[ShowCommentSchema], dependencies=[Depends(JWTBearer())])
+async def get_comments_by_recipe_id(recipe_id: int, db: Session = Depends(get_db)):
+    if not recipe_exists(recipe_id, db):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Recipe not found",
+        )
+    
+    comments = CommentRepository.get_comments_by_recipe_id(recipe_id, db)
+    return comments
+
+@router.get("/by_user/{user_id}", response_model=list[ShowCommentSchema], dependencies=[Depends(JWTBearer())])
+async def get_comments_by_user_id(user_id: int, db: Session = Depends(get_db)):
+    comments = CommentRepository.get_comments_by_user_id(user_id, db)
+    return comments
+
+@router.get("/{comment_id}", response_model=ShowCommentSchema, dependencies=[Depends(JWTBearer())])
+async def get_comment_by_id(comment_id: int, db: Session = Depends(get_db)):
+    comment = CommentRepository.get_comment_by_id(comment_id, db)
+    if not comment:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found!"
+        )
+    return comment
