@@ -9,3 +9,12 @@ class CommentRepository:
         db.commit()
         db.refresh(new_comment)
         return new_comment
+    
+    def get_comment_by_id(comment_id: int, db: Session):
+        return db.query(Comment).filter(Comment.id == comment_id).first()
+    
+    def delete_comment(comment_id: int, db: Session):
+        comment = CommentRepository.get_comment_by_id(comment_id, db)
+        if comment:
+            db.delete(comment)
+            db.commit()
