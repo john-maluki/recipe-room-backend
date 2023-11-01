@@ -1,6 +1,15 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
+class FavouriteRecipe(BaseModel):
+    id: int
+    recipe_id: int
+    user_id: int
+    
+
+    class Config:
+        orm_mode = True
+
 
 class ShowFavouriteRecipe(BaseModel):
     id: int
