@@ -18,3 +18,12 @@ class CommentRepository:
         if comment:
             db.delete(comment)
             db.commit()
+    
+    def get_comments_by_recipe_id(recipe_id: int, db: Session):
+        return db.query(Comment).filter(Comment.recipe_id == recipe_id).all()
+    
+    def get_comments_by_user_id(user_id: int, db: Session):
+        return db.query(Comment).filter(Comment.user_id == user_id).all()
+    
+    def get_comment_by_id(comment_id: int, db: Session):
+        return db.query(Comment).filter(Comment.id == comment_id).first()
