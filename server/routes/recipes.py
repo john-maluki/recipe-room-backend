@@ -29,6 +29,11 @@ async def get_recipe_by_id(id: int, db: Session = Depends(get_db)):
         )
     return recipe
 
+@router.get("/user/{user_id}", response_model=List[RecipeSchema], dependencies=[Depends(JWTBearer())])
+async def get_recipes_by_user(user_id: int, db: Session = Depends(get_db)):
+    recipes = RecipeRepository.get_recipes_by_user(user_id, db)
+    return recipes
+
 @router.post("/", response_model=RecipeSchema, dependencies=[Depends(JWTBearer())])
 async def create_recipe(
     recipe_data: CreateRecipeSchema, db: Session = Depends(get_db)
