@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class FavouriteRecipe(BaseModel):
     id: int
@@ -114,6 +114,19 @@ class UpdateUserSchema(BaseModel):
     class Config:
         orm_mode = True
 
+class CreateRatingSchema(BaseModel):
+    rating: int = Field(..., ge=1, le=5)
+    user_id: int
+    recipe_id: int
+
+class ShowRatingSchema(BaseModel):
+    id: int
+    rating: int
+    user_id: int
+    recipe_id: int
+
+    class Config:
+        orm_mode = True
 
 class LoginSchema(BaseModel):
     email: str
