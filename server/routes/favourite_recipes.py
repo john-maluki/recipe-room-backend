@@ -49,7 +49,7 @@ async def create_favourite_recipe(
     new_favourite_recipe = FavouriteRecipeRepository.create_favourite_recipe(db, user_id=user_id, recipe_id=recipe_id)
     return new_favourite_recipe
 
-@router.get("/favourite_recipes/{user_id}", response_model=List[FavouriteRecipe])
+@router.get("/{user_id}", response_model=List[FavouriteRecipe])
 async def get_favourites_by_user(user_id: int, db: Session = Depends(get_db)):
 
     favourites = FavouriteRecipeRepository.get_favourite_recipes_by_user(db, user_id)
@@ -60,7 +60,7 @@ async def get_all_favourite_recipes(db: Session = Depends(get_db)):
     all_favourites = FavouriteRecipeRepository.get_all_favourite_recipes(db)
     return all_favourites
 
-@router.delete("/favourite/{favourite_id}", response_model=dict, dependencies=[Depends(JWTBearer())])
+@router.delete("/{favourite_id}", response_model=dict, dependencies=[Depends(JWTBearer())])
 async def delete_favourite_recipe(favourite_id: int, user_id: int = Depends(get_user_id), db: Session = Depends(get_db)):
     existing_favourite = FavouriteRecipeRepository.get_favourite_recipe_by_id(db, favourite_id)
 

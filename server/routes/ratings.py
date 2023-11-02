@@ -17,7 +17,7 @@ async def create_rating(rating_data: CreateRatingSchema, db: Session = Depends(g
     
     return new_rating
 
-@router.get("/{recipe_id}", response_model=List[ShowRatingSchema], dependencies=[Depends(JWTBearer())])
+@router.get("/recipe/{recipe_id}", response_model=List[ShowRatingSchema], dependencies=[Depends(JWTBearer())])
 async def get_ratings_by_recipe_id(recipe_id: int, db: Session = Depends(get_db)):
     ratings = RatingRepository.get_ratings_by_recipe_id(db, recipe_id)
     
