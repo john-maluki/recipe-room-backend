@@ -50,3 +50,9 @@ class RatingRepository:
             db.refresh(existing_rating)
 
         return existing_rating
+    
+    def delete_rating(db: Session, rating_id: int):
+        rating_to_delete = db.query(Rating).filter(Rating.id == rating_id).first()
+        if rating_to_delete:
+            db.delete(rating_to_delete)
+            db.commit()
