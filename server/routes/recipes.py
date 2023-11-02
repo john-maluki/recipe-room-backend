@@ -47,7 +47,7 @@ async def update_recipe(id: int, recipe_data: UpdateRecipeSchema, db: Session = 
     updated_recipe = RecipeRepository.update_recipe(db, existing_recipe, recipe_data)
     return updated_recipe
 
-@router.delete("/recipes/{recipe_id}", response_model=dict)
+@router.delete("/{recipe_id}", response_model=dict)
 def delete_recipe(recipe_id: int, db: Session = Depends(get_db)):
     try:
         RecipeRepository.delete_recipe(recipe_id, db)

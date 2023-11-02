@@ -5,6 +5,7 @@ from ..repository.comment import CommentRepository
 from ..repository.recipe import RecipeRepository 
 from ..schemas import ShowCommentSchema
 from ..auth.auth_bearer import JWTBearer
+from . favourite_recipes import get_user_id
 
 
 router = APIRouter(prefix="/comments", tags=["comments"])
@@ -37,16 +38,21 @@ async def create_comment(
     new_comment = CommentRepository.create_comment(db, recipe_id=recipe_id, comment=comment, user_id= user_id)
     return new_comment
 
-@router.delete("/{comment_id}", response_model=dict, dependencies=[Depends(JWTBearer())])
-async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
+@router.delete("/{comment_id}", response_model=dict, dependencies=[Depends(JWTBearer()), Depends(get_user_id)])
+async def delete_comment(comment_id: int, user_id: int = Depends(get_user_id), db: Session = Depends(get_db)):
     comment = CommentRepository.get_comment_by_id(comment_id, db)
     if not comment:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found!"
         )
-    
+
+    if comment.user_id != user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="You can only delete your own comment."
+        )
+
     CommentRepository.delete_comment(comment_id, db)
-    
+
     return {"message": "Comment deleted successfully"}
 
 @router.get("/by_recipe/{recipe_id}", response_model=list[ShowCommentSchema], dependencies=[Depends(JWTBearer())])
