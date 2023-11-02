@@ -15,3 +15,12 @@ async def create_rating(rating_data: CreateRatingSchema, db: Session = Depends(g
     new_rating = RatingRepository.create_rating(db, rating_data)
     
     return new_rating
+
+@router.get("/{recipe_id}", response_model=List[ShowRatingSchema], dependencies=[Depends(JWTBearer())])
+async def get_ratings_by_recipe_id(recipe_id: int, db: Session = Depends(get_db)):
+    ratings = RatingRepository.get_ratings_by_recipe_id(db, recipe_id)
+    
+    if not ratings:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No ratings found for the specified recipe")
+    
+    return ratings
