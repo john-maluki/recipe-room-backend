@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from ..schemas import CreateRatingSchema, ShowRatingSchema, UpdateRatingSchema, ShowUpdatedRatingSchema
 from ..repository.rating import RatingRepository
 from ..database import get_db
-from ..auth.auth_bearer import JWTBearer
+from ..auth.auth_bearer import JWTBearer,decodeJWT
+from jose import JWTError
 
 
 
@@ -45,3 +46,25 @@ async def update_rating(rating_id: int, rating_data: UpdateRatingSchema, db: Ses
 
     updated_rating = RatingRepository.update_rating(db, rating_id, rating_data)
     return updated_rating
+
+@router.delete("/{rating_id}", response_model=dict, dependencies=[Depends(JWTBearer())])
+async def delete_rating(rating_id: int, db: Session = Depends(get_db), token: str = Depends(JWTBearer(auto_error=False))):
+    if not token:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+    
+    try:
+        payload = decodeJWT(token)
+        user_id_from_token = int(payload.get("sub").get("id"))
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="UNAUTHORIZED ACTION.")
+
+    existing_rating = RatingRepository.get_rating_by_id(db, rating_id)
+    if not existing_rating:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Rating not found")
+
+    if existing_rating.user_id != user_id_from_token:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You cannot to delete this rating")
+
+    RatingRepository.delete_rating(db, rating_id)
+
+    return {"detail": "Rating deleted successfully"}
