@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import status, HTTPException
 from ..models import Rating, User
 from ..schemas import CreateRatingSchema
+from typing import List
 
 class RatingRepository:
     def create_rating(db: Session, rating_data: CreateRatingSchema):
@@ -24,4 +25,6 @@ class RatingRepository:
         db.refresh(new_rating)
         return new_rating
     
+    def get_ratings_by_recipe_id(db: Session, recipe_id: int) -> List[Rating]:
+        return db.query(Rating).filter(Rating.recipe_id == recipe_id).all()
     
