@@ -128,6 +128,20 @@ class ShowRatingSchema(BaseModel):
     class Config:
         orm_mode = True
 
+class UpdateRatingSchema(BaseModel):
+    rating: int
+    user_id: int
+
+class ShowUpdatedRatingSchema(BaseModel):
+    id: int
+    rating: int
+    user_id: int
+    recipe_id: int
+
+    class Config:
+        orm_mode = True
+
+
 class LoginSchema(BaseModel):
     email: str
     password: str
