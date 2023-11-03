@@ -49,7 +49,7 @@ async def create_favourite_recipe(
     new_favourite_recipe = FavouriteRecipeRepository.create_favourite_recipe(db, user_id=user_id, recipe_id=recipe_id)
     return new_favourite_recipe
 
-@router.get("/{user_id}", response_model=List[FavouriteRecipe])
+@router.get("/{user_id}", response_model=List[FavouriteRecipe], dependencies=[Depends(JWTBearer())])
 async def get_favourites_by_user(user_id: int, db: Session = Depends(get_db)):
 
     favourites = FavouriteRecipeRepository.get_favourite_recipes_by_user(db, user_id)
