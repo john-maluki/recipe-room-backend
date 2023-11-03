@@ -6,15 +6,22 @@ from ..repository.rating import RatingRepository
 from ..database import get_db
 from ..auth.auth_bearer import JWTBearer,decodeJWT
 from jose import JWTError
+from . favourite_recipes import get_user_id
+from ..models import User
 
 
 
 router = APIRouter(prefix="/ratings", tags=["ratings"])
 
 @router.post("/", response_model=ShowRatingSchema, status_code=status.HTTP_201_CREATED, dependencies=[Depends(JWTBearer())])
-async def create_rating(rating_data: CreateRatingSchema, db: Session = Depends(get_db)):
+async def create_rating(rating_data: CreateRatingSchema, db: Session = Depends(get_db), current_user: User = Depends(get_user_id)):
+    existing_rating = RatingRepository.get_rating_by_user_and_recipe(db, user_id=current_user, recipe_id=rating_data.recipe_id)
+
+    if existing_rating:
+        updated_rating = RatingRepository.update_rating(db, existing_rating.id, rating_data)
+        return updated_rating
+
     new_rating = RatingRepository.create_rating(db, rating_data)
-    
     return new_rating
 
 @router.get("/recipe/{recipe_id}", response_model=List[ShowRatingSchema], dependencies=[Depends(JWTBearer())])
