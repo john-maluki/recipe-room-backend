@@ -39,6 +39,10 @@ class RatingRepository:
     def get_rating_by_id(db: Session, rating_id: int):
         return db.query(Rating).filter(Rating.id == rating_id).first()
     
+    def get_rating_by_user_and_recipe(db: Session, user_id: int, recipe_id: int) -> Rating:
+        return db.query(Rating).filter_by(user_id=user_id, recipe_id=recipe_id).first()
+
+    
     def update_rating(db: Session, rating_id: int, updated_data: UpdateRatingSchema):
         existing_rating = db.query(Rating).filter(Rating.id == rating_id).first()
 
