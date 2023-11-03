@@ -1,11 +1,14 @@
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Union
 from fastapi import APIRouter, Depends, status, HTTPException
 
 from ..schemas import RecipeSchema, CreateRecipeSchema, UpdateRecipeSchema
 from ..database import get_db
 from ..repository.recipe import RecipeRepository
+from ..repository.user import UserRepository
 from ..auth.auth_bearer import JWTBearer
+from .favourite_recipes import get_user_id
+from ..models import User
 
 router = APIRouter(prefix="/recipes", tags=["recipes"])
 
@@ -53,9 +56,18 @@ async def update_recipe(id: int, recipe_data: UpdateRecipeSchema, db: Session = 
     return updated_recipe
 
 @router.delete("/{recipe_id}", response_model=dict)
-def delete_recipe(recipe_id: int, db: Session = Depends(get_db)):
-    try:
+def delete_recipe(recipe_id: int, current_user: Union[int, User] = Depends(get_user_id), db: Session = Depends(get_db)):
+        if isinstance(current_user, int):
+            current_user = UserRepository.get_user_by_id(current_user, db)
+
+        recipe = RecipeRepository.get_recipe_by_id(recipe_id, db)
+
+        if not recipe:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+
+        if recipe.user_id != current_user.id:
+            raise HTTPException(status_code=403, detail="You are not allowed to delete this recipe")
+
         RecipeRepository.delete_recipe(recipe_id, db)
         return {"message": "Recipe deleted successfully"}
-    except HTTPException as e:
-        return {"error": str(e)}
+    
