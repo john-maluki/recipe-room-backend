@@ -32,7 +32,7 @@ if __name__ == "__main__":
         Recipe(
             name="Ugali",
             recipe_image="https://netstorage-tuko.akamaized.net/images/9019461c20257dd3.jpg?imwidth=720",
-            ingredients="Maize flour,Water",
+            ingredients="Maize flour\nWater",
             procedure="Boil water in a deep pan or a sufuria until it boils.\nAdd the maize meal and keep on stirring with a strong wooden spoon.\nKeep stirring and pressing the mixture against the sides of the pan to break up the lumps.\nKeep adding the flour as you continue mixing.\nCook until it is firm enough. The ugali should not be too hard or too soft.\nAllow it to cook for 2-3 minutes.\nTurn the ugali over onto a plate and serve.",
             number_of_people_served=3,
             time_in_minutes=5,
