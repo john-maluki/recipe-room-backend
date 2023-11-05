@@ -1,11 +1,12 @@
+from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field
+
 
 class FavouriteRecipe(BaseModel):
     id: int
     recipe_id: int
     user_id: int
-    
 
     class Config:
         orm_mode = True
@@ -56,7 +57,7 @@ class CreateRecipeSchema(BaseModel):
     time_in_minutes: int
     country: str
     user_id: int
-    
+
     class Config:
         orm_mode = True
 
@@ -70,6 +71,7 @@ class RecipeSchema(BaseModel):
     number_of_people_served: int
     time_in_minutes: int
     country: str
+    created_at: datetime
     rating: float
     user: ShowUserSchema
     comments: List[ShowCommentSchema]
@@ -101,6 +103,7 @@ class CreateUserSchema(BaseModel):
     phone_number: str
     password: str
 
+
 class UpdateUserSchema(BaseModel):
     first_name: Optional[str]
     last_name: Optional[str]
@@ -114,10 +117,12 @@ class UpdateUserSchema(BaseModel):
     class Config:
         orm_mode = True
 
+
 class CreateRatingSchema(BaseModel):
     rating: int = Field(..., ge=1, le=5)
     user_id: int
     recipe_id: int
+
 
 class ShowRatingSchema(BaseModel):
     id: int
@@ -128,9 +133,11 @@ class ShowRatingSchema(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UpdateRatingSchema(BaseModel):
     rating: int
     user_id: int
+
 
 class ShowUpdatedRatingSchema(BaseModel):
     id: int
