@@ -29,3 +29,9 @@ class FavouriteRecipeRepository:
     
     def get_favourite_recipe_by_id(db: Session, favourite_id: int):
         return db.query(Favourite).filter_by(id=favourite_id).first()
+    
+    def delete_favourite_recipe(db: Session, favourite_id: int):
+        favourite_recipe = db.query(Favourite).filter(Favourite.id == favourite_id).first()
+        if favourite_recipe:
+            db.delete(favourite_recipe)
+            db.commit()
