@@ -27,7 +27,7 @@ def get_user_id(token: str = Depends(JWTBearer())) -> int:
 
 
 @router.post("/favourite", response_model=FavouriteRecipe, dependencies=[Depends(JWTBearer())])
-async def create_favourite_recipe(
+async def create_or_delete_favourite_recipe(
     recipe_id: int,
     user_id: int,
     db: Session = Depends(get_db)
@@ -41,13 +41,12 @@ async def create_favourite_recipe(
 
     existing_favourite = FavouriteRecipeRepository.get_favourite_recipe_by_user_and_recipe(user_id, recipe_id, db)
     if existing_favourite:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Recipe already marked as favourite",
-        )
+        FavouriteRecipeRepository.delete_favourite_recipe(db, existing_favourite.id)
+        return {"detail": "Favourite recipe deleted successfully", "id": existing_favourite.id, "recipe_id": recipe_id, "user_id": user_id}
+    else:
+        new_favourite_recipe = FavouriteRecipeRepository.create_favourite_recipe(db, user_id=user_id, recipe_id=recipe_id)
+        return {"detail": "Favourite recipe created successfully", "id": new_favourite_recipe.id, "recipe_id": recipe_id, "user_id": user_id}
 
-    new_favourite_recipe = FavouriteRecipeRepository.create_favourite_recipe(db, user_id=user_id, recipe_id=recipe_id)
-    return new_favourite_recipe
 
 @router.get("/{user_id}", response_model=List[RecipeSchema], dependencies=[Depends(JWTBearer())])
 async def get_favourites_by_user(user_id: int, db: Session = Depends(get_db)):
