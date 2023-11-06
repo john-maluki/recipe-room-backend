@@ -112,7 +112,6 @@ class UpdateUserSchema(BaseModel):
     profile_photo: Optional[str]
     country: Optional[str]
     phone_number: Optional[str]
-    password: Optional[str]
 
     class Config:
         orm_mode = True

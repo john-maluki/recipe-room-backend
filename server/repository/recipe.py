@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import status, HTTPException
 from ..models import Recipe, User
 from ..schemas import CreateRecipeSchema, UpdateRecipeSchema
+from typing import List
 
 
 class RecipeRepository:
@@ -37,6 +38,10 @@ class RecipeRepository:
     def get_recipe_by_id(id: int, db: Session):
         recipe = db.query(Recipe).filter_by(id=id).first()
         return recipe
+    
+    def get_recipes_by_user(user_id: int, db: Session) -> List[Recipe]:
+        recipes = db.query(Recipe).filter(Recipe.user_id == user_id).all()
+        return recipes
     
     def update_recipe(db: Session, existing_recipe: Recipe, recipe_data: UpdateRecipeSchema):
         data_dict = recipe_data.dict()
