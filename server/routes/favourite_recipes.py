@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import List
 from fastapi import APIRouter, Depends, status, HTTPException
-from ..schemas import  FavouriteRecipe
+from ..schemas import  FavouriteRecipe, RecipeSchema
 from ..auth.auth_bearer import JWTBearer, decodeJWT
 from ..database import get_db
 from ..repository.recipe import RecipeRepository
@@ -49,7 +49,7 @@ async def create_favourite_recipe(
     new_favourite_recipe = FavouriteRecipeRepository.create_favourite_recipe(db, user_id=user_id, recipe_id=recipe_id)
     return new_favourite_recipe
 
-@router.get("/{user_id}", response_model=List[FavouriteRecipe], dependencies=[Depends(JWTBearer())])
+@router.get("/{user_id}", response_model=List[RecipeSchema], dependencies=[Depends(JWTBearer())])
 async def get_favourites_by_user(user_id: int, db: Session = Depends(get_db)):
 
     favourites = FavouriteRecipeRepository.get_favourite_recipes_by_user(db, user_id)
