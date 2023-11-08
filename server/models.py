@@ -57,6 +57,11 @@ class Recipe(BaseModel):
 
         return total / length
 
+    @property
+    def favourites(self):
+        length = len(self.user_favourites)
+        return length
+
 
 class Comment(BaseModel):
     __tablename__ = "comments"
