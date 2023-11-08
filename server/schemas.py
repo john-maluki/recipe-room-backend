@@ -43,6 +43,8 @@ class ShowUserSchema(BaseModel):
 class ShowCommentSchema(BaseModel):
     id: int
     comment: str
+    created_at: datetime
+    user: ShowUserSchema
 
     class Config:
         orm_mode = True
@@ -72,7 +74,8 @@ class RecipeSchema(BaseModel):
     time_in_minutes: int
     country: str
     created_at: datetime
-    rating: float
+    rating: int
+    favourites: int
     user: ShowUserSchema
     comments: List[ShowCommentSchema]
 
@@ -151,3 +154,14 @@ class ShowUpdatedRatingSchema(BaseModel):
 class LoginSchema(BaseModel):
     email: str
     password: str
+
+
+class CreateFavouriteSchema(BaseModel):
+    user_id: int
+    recipe_id: int
+
+
+class CreateCommentSchema(BaseModel):
+    recipe_id: int
+    comment: str
+    user_id: int
