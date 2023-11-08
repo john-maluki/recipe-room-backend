@@ -25,6 +25,7 @@ class User(BaseModel):
     )
 
     recipes = relationship("Recipe", backref="user", cascade="all, delete")
+    comments = relationship("Comment", backref="user", cascade="all, delete")
 
 
 class Recipe(BaseModel):
