@@ -75,6 +75,7 @@ class RecipeSchema(BaseModel):
     country: str
     created_at: datetime
     rating: int
+    rate_count: int
     favourites: int
     user: ShowUserSchema
     comments: List[ShowCommentSchema]

@@ -63,6 +63,11 @@ class Recipe(BaseModel):
         length = len(self.user_favourites)
         return length
 
+    @property
+    def rate_count(self):
+        length = len(self.ratings)
+        return length
+
 
 class Comment(BaseModel):
     __tablename__ = "comments"
