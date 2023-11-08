@@ -1,7 +1,9 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException
 from ..models import Recipe, User
 from ..schemas import CreateRecipeSchema, UpdateRecipeSchema
+from typing import List
 
 
 class RecipeRepository:
@@ -22,23 +24,31 @@ class RecipeRepository:
             number_of_people_served=recipe_data.number_of_people_served,
             time_in_minutes=recipe_data.time_in_minutes,
             country=recipe_data.country,
-            user=user,  
+            user=user,
         )
 
         db.add(new_recipe)
         db.commit()
         db.refresh(new_recipe)
         return new_recipe
-    
+
     def get_all(db: Session):
         recipes = db.query(Recipe).all()
         return recipes
 
     def get_recipe_by_id(id: int, db: Session):
         recipe = db.query(Recipe).filter_by(id=id).first()
+        if recipe:
+            recipe.comments.sort(key=lambda obj: obj.created_at, reverse=True)
         return recipe
-    
-    def update_recipe(db: Session, existing_recipe: Recipe, recipe_data: UpdateRecipeSchema):
+
+    def get_recipes_by_user(user_id: int, db: Session) -> List[Recipe]:
+        recipes = db.query(Recipe).filter(Recipe.user_id == user_id).all()
+        return recipes
+
+    def update_recipe(
+        db: Session, existing_recipe: Recipe, recipe_data: UpdateRecipeSchema
+    ):
         data_dict = recipe_data.dict()
 
         for key, value in data_dict.items():
@@ -48,14 +58,14 @@ class RecipeRepository:
         db.refresh(existing_recipe)
 
         return existing_recipe
-    
+
     def delete_recipe(id: int, db: Session):
         recipe = db.query(Recipe).filter_by(id=id).first()
 
         if not recipe:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Recipe with id {id} not found!"
+                detail=f"Recipe with id {id} not found!",
             )
 
         db.delete(recipe)

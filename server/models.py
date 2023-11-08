@@ -25,6 +25,7 @@ class User(BaseModel):
     )
 
     recipes = relationship("Recipe", backref="user", cascade="all, delete")
+    comments = relationship("Comment", backref="user", cascade="all, delete")
 
 
 class Recipe(BaseModel):
@@ -56,6 +57,16 @@ class Recipe(BaseModel):
         total = sum([r.rating for r in self.ratings])
 
         return total / length
+
+    @property
+    def favourites(self):
+        length = len(self.user_favourites)
+        return length
+
+    @property
+    def rate_count(self):
+        length = len(self.ratings)
+        return length
 
 
 class Comment(BaseModel):

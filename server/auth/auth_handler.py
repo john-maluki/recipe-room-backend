@@ -30,7 +30,7 @@ def signJWT(user: User) -> Dict[str, str]:
     }
     payload = {
         "sub": user_data,
-        "expires": time.time() + (int(ACCESS_TOKEN_EXPIRE_MINUTES) * 60),
+        "expires": time.time() + (int(ACCESS_TOKEN_EXPIRE_MINUTES) * 60 * 12),
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
