@@ -23,7 +23,7 @@ if __name__ == "__main__":
             phone_number="0700000000",
             password=Hash.bcrypt("john@123"),
         ),
-         User(
+        User(
             first_name="Ubah",
             last_name="Feisal",
             username="ubah@test.com",
@@ -33,7 +33,7 @@ if __name__ == "__main__":
             phone_number="07222222",
             password=Hash.bcrypt("ubah@123"),
         ),
-          User(
+        User(
             first_name="Kiare",
             last_name="Collin",
             username="Kiare@test.com",
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             phone_number="072555555",
             password=Hash.bcrypt("kiare@123"),
         ),
-          User(
+        User(
             first_name="Ismail",
             last_name="Hussein",
             username="Hussein@test.com",
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             phone_number="072888888",
             password=Hash.bcrypt("Hussein@123"),
         ),
-          User(
+        User(
             first_name="Philip",
             last_name="philip",
             username="philip@test.com",
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             country="Kenya",
             phone_number="072854545",
             password=Hash.bcrypt("philip@123"),
-        )
+        ),
     ]
     for user in users:
         session.add(user)
@@ -89,7 +89,6 @@ if __name__ == "__main__":
             country="Kenya",
             user_id=2,
         ),
-         
         Recipe(
             name="Pecan Chicken Salad",
             recipe_image="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F8223825.jpg&q=60&c=sc&orient=true&poi=auto&h=512",
@@ -139,8 +138,7 @@ if __name__ == "__main__":
             time_in_minutes=15,
             country="International",
             user_id=4,
-            
-         ),
+        ),
         Recipe(
             name="Waffle House-Style Waffles",
             recipe_image="https://www.allrecipes.com/thmb/aRaAaSmn6NFZxc9-x_jpYU7FhKw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8534837-Waffle-House-Style-Waffles-4x3-1-a17b741844894e079cfcd388c21c3749.jpg",
@@ -150,8 +148,7 @@ if __name__ == "__main__":
             time_in_minutes=95,
             country="international",
             user_id=3,
-            
-         ),
+        ),
         Recipe(
             name="Arugula Salad with Stone Fruit",
             recipe_image="https://www.allrecipes.com/thmb/EC7FTg4V4z3ijZyHMVmdXTlkFaQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/7506181-arugula-salad-with-stone-fruit-GOLDMAN-4x3-5066-df2290fa4eaf49689258d9100e1170f4.jpg",
@@ -161,8 +158,7 @@ if __name__ == "__main__":
             time_in_minutes=20,
             country="international",
             user_id=5,
-            
-         ),
+        ),
         Recipe(
             name="Homemade Pita Bread",
             recipe_image="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fpublic-assets.meredithcorp.io%2Faa387860990c4668c1f1e320ac93fbaf%2F1657139429image.jpg&q=60&c=sc&orient=true&poi=auto&h=512",
@@ -171,13 +167,8 @@ if __name__ == "__main__":
             number_of_people_served=8,
             time_in_minutes=155,
             country="Kenya",
-            user_id=2
-            
-         )
-         
-         
-         
-         
+            user_id=2,
+        ),
     ]
 
     for recipe in recipes:
@@ -198,5 +189,3 @@ if __name__ == "__main__":
     for favourite in favourites:
         session.add(favourite)
     session.commit()
-
-
