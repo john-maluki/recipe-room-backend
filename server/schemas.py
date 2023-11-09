@@ -9,7 +9,7 @@ class FavouriteRecipe(BaseModel):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ShowFavouriteRecipe(BaseModel):
@@ -22,7 +22,7 @@ class ShowFavouriteRecipe(BaseModel):
     country: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ShowUserSchema(BaseModel):
@@ -37,7 +37,7 @@ class ShowUserSchema(BaseModel):
     favourite_recepes: List[ShowFavouriteRecipe] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ShowCommentSchema(BaseModel):
@@ -47,7 +47,7 @@ class ShowCommentSchema(BaseModel):
     user: ShowUserSchema
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CreateRecipeSchema(BaseModel):
@@ -61,7 +61,7 @@ class CreateRecipeSchema(BaseModel):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class RecipeSchema(BaseModel):
@@ -81,7 +81,7 @@ class RecipeSchema(BaseModel):
     comments: List[ShowCommentSchema]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UpdateRecipeSchema(BaseModel):
@@ -94,7 +94,7 @@ class UpdateRecipeSchema(BaseModel):
     country: Optional[str]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CreateUserSchema(BaseModel):
@@ -118,7 +118,7 @@ class UpdateUserSchema(BaseModel):
     phone_number: Optional[str]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CreateRatingSchema(BaseModel):
@@ -134,7 +134,7 @@ class ShowRatingSchema(BaseModel):
     recipe_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UpdateRatingSchema(BaseModel):
@@ -149,7 +149,7 @@ class ShowUpdatedRatingSchema(BaseModel):
     recipe_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class LoginSchema(BaseModel):
