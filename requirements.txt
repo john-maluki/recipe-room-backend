@@ -35,7 +35,6 @@ ptyprocess
 pure-eval
 pyasn1
 pydantic
-pydantic_core
 Pygments
 PyJWT
 python-decouple
@@ -47,7 +46,6 @@ six
 sniffio
 SQLAlchemy
 stack-data
-starlette
 traitlets
 twilio
 typing_extensions
