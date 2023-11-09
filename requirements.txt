@@ -53,3 +53,4 @@ urllib3
 uvicorn
 wcwidth
 yarl
+bcrypt
