@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+alembic
+fastapi-shell
+passlib
+python-jose
+python-multipart
+pyjwt
+python-decouple
+twilio
