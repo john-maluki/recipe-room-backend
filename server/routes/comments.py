@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from typing import List
 from ..database import get_db
 from ..repository.comment import CommentRepository
 from ..repository.recipe import RecipeRepository
@@ -66,7 +67,7 @@ async def delete_comment(
 
 @router.get(
     "/by_recipe/{recipe_id}",
-    response_model=list[ShowCommentSchema],
+    response_model=List[ShowCommentSchema],
     dependencies=[Depends(JWTBearer())],
 )
 async def get_comments_by_recipe_id(recipe_id: int, db: Session = Depends(get_db)):
@@ -82,7 +83,7 @@ async def get_comments_by_recipe_id(recipe_id: int, db: Session = Depends(get_db
 
 @router.get(
     "/by_user/{user_id}",
-    response_model=list[ShowCommentSchema],
+    response_model=List[ShowCommentSchema],
     dependencies=[Depends(JWTBearer())],
 )
 async def get_comments_by_user_id(user_id: int, db: Session = Depends(get_db)):

@@ -1,5 +1,13 @@
 from server import app
-from server.routes import recipes, users, index, auths, comments, favourite_recipes, ratings
+from server.routes import (
+    recipes,
+    users,
+    index,
+    auths,
+    comments,
+    favourite_recipes,
+    ratings,
+)
 
 app.include_router(index.router)
 app.include_router(auths.router)
