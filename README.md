@@ -40,10 +40,19 @@ Registered users can also engage with the recipes by commenting, bookmarking, an
 
 ## Project Team
 -John Maluki
+
 -Ismail Hussein
+
 -Collin Kiare
+
 -Philip Loyd
+
 -Ubah Feisal
+
+
+
+![landing page img](/doc/WhatsApp%20Image%202023-11-09%20at%2018.01.11.jpeg)
+
 
 
 
@@ -69,8 +78,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-![landing page img](/doc/WhatsApp%20Image%202023-11-09%20at%2018.01.11.jpeg)
 
 # Technologies Used
 -Backend: FastAPI (Python)
