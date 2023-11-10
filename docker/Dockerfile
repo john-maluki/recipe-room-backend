@@ -1,0 +1,3 @@
+FROM postgres
+ENV POSTGRES_PASSWORD recipe@12345
+ENV POSTGRES_DB recipe_room

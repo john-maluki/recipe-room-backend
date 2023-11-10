@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = ["http://localhost", "http://localhost:3000", "http://127.0.0.1:3000"]
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://frontend-final-phase.vercel.app",
+    "http://frontend-final-phase.vercel.app",
+]
 
 app = FastAPI()
 
