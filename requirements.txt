@@ -54,3 +54,4 @@ uvicorn
 wcwidth
 yarl
 bcrypt
+psycopg2
