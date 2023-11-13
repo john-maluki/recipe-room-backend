@@ -8,34 +8,34 @@ Recipe-Room is an application designed to address this issue. It allows users to
 Registered users can also engage with the recipes by commenting, bookmarking, and rating them. This collaborative platform aims to foster a community of food enthusiasts.
 
 # Features
--Login: 
+- Login: 
     Users can log in to their accounts.
     
--Create an Account:
+- Create an Account:
      New users can register and create an account.
      
--View and Update Profile:
+- View and Update Profile:
      Users can view their profiles and update information. Profile images are stored on Cloudinary for easy access and management.
      
--View and Search Recipes:
+- View and Search Recipes:
     Search by name, ingredients, and number of people served.
     
--Filter Recipes:
+- Filter Recipes:
     Filter recipes by country, ratings, ingredients, number of people served, and creation date-time.
     
--Create, Update, and Delete Recipes:
+- Create, Update, and Delete Recipes:
     Users can add new recipes, edit existing ones, and delete recipes they've added.
     
--Bookmarking/Favoriting Recipes:
+- Bookmarking/Favoriting Recipes:
     Users can mark recipes as favorites for easy access later.
     
--Share Recipe on Social Media:
+-  Share Recipe on Social Media:
     Recipes can be shared on popular social media platforms like Facebook, Twitter, and WhatsApp.
     
--Group Recipe Creation:
+- Group Recipe Creation:
     Ability to create a recipe collaboratively, similar to a WhatsApp group feature.
     
--Sign Out:
+- Sign Out:
      Users can log out of their accounts.
 
 ## Project Team
@@ -53,8 +53,17 @@ Registered users can also engage with the recipes by commenting, bookmarking, an
 
 ![landing page img](/doc/WhatsApp%20Image%202023-11-09%20at%2018.01.11.jpeg)
 
+# Technologies Used
+-Backend: FastAPI (Python)
+-Database: PostgreSQL
 
+# Setup Instructions
+Clone the repository to your local machine.
+Set up the backend server using FastAPI and PostgreSQL.
+Connect the frontend to the backend by configuring appropriate API endpoints.
+Run the application and start exploring recipes!
 
+Happy cooking! 🥘🍲🥗🍰
 
 ## License
 
@@ -78,15 +87,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-# Technologies Used
--Backend: FastAPI (Python)
--Database: PostgreSQL
-
-# Setup Instructions
-Clone the repository to your local machine.
-Set up the backend server using FastAPI and PostgreSQL.
-Connect the frontend to the backend by configuring appropriate API endpoints.
-Run the application and start exploring recipes!
-
-Happy cooking! 🥘🍲🥗🍰
